@@ -1,329 +1,272 @@
-Video Content Relevance Scorer - Project Documentation
-Project Overview
-The Video Content Relevance Scorer is an AI-powered application designed to analyze and evaluate how well video content aligns with its declared title and description. In today's digital landscape where thousands of videos are uploaded hourly across platforms like YouTube, social media, and e-learning portals, this tool addresses the critical challenge of assessing content relevance and detecting misleading or clickbait content.
+# Video Content Relevance Scorer
 
-Problem Statement
-The Challenge
-Misleading Content: Many videos use clickbait titles and thumbnails that don't match actual content
+The **Video Content Relevance Scorer** is an AI-powered application designed to analyze and evaluate how closely a video’s content matches its declared title and description. With the rapid growth of online video platforms, misleading or clickbait content has become increasingly common. This tool enables educators, marketers, and platforms to verify content accuracy and improve user experience through automated, intelligent relevance scoring.
 
-Content Verification: Educators, marketers, and recommendation systems need reliable ways to verify content relevance
+---
 
-Quality Assessment: Automated systems struggle to understand semantic relationships between titles and content
+## 🚧 Problem Overview
 
-Solution
-An AI model that:
+### **The Challenge**
 
-Takes video URL, title, description, and transcript as input
+* **Misleading Content**: Video titles and thumbnails often misrepresent content.
+* **Content Verification Needs**: Educators, marketers, and recommendation engines require reliable ways to validate video accuracy.
+* **Quality Assessment Gaps**: Automated systems struggle to understand deeper semantic alignment.
 
-Evaluates semantic relevance between declared topics and actual content
+### **The Solution**
 
-Detects off-topic, promotional, or filler segments
+This application uses AI to:
 
-Generates comprehensive relevance scores with detailed justifications
+* Process the video’s title, description, and transcript.
+* Analyze semantic similarity between declared topics and actual spoken content.
+* Detect promotional, irrelevant, or filler segments.
+* Produce detailed relevance scores with explanations.
 
-Core Features
-1. Multi-Modal Input System
-YouTube Integration: Direct URL processing with automatic transcript extraction
+---
 
-Manual Input: Support for pasting titles, descriptions, and transcripts
+## ✨ Core Features
 
-Sample Data: Built-in demonstration data for testing
+### **1. Multi-Modal Input System**
 
-2. AI-Powered Analysis
-Semantic Similarity: Uses sentence transformers to compare title/description with content
+* **YouTube Integration** with transcript extraction via yt-dlp
+* **Manual Input** for title, description, transcript
+* **Sample Data** for quick testing and demos
 
-Promotional Detection: Identifies marketing and sales-oriented content
+### **2. AI-Powered Analysis**
 
-Segment Classification: Categorizes content as relevant, moderately relevant, irrelevant, or promotional
+* Semantic similarity using **Sentence Transformers** (`all-MiniLM-L6-v2`)
+* Promotional content identification
+* Segment-wise classification: *relevant, moderately relevant, irrelevant, promotional*
 
-3. Comprehensive Scoring
-Overall Relevance Score: 0-100% based on content alignment
+### **3. Comprehensive Scoring**
 
-Segment-level Analysis: Individual scoring for different parts of the video
+* **Overall relevance score (0-100%)**
+* Segment-level scoring
+* AI-generated explanations for each segment
 
-Justification Generation: AI-generated explanations for scores
+### **4. Visual Analytics**
 
-4. Visual Analytics
-Relevance Heatmap: Color-coded timeline showing relevance across segments
+* Relevance heatmap
+* Segment classification charts
+* Interactive dashboard built with Streamlit & Plotly
 
-Segment Analysis Charts: Bar charts showing distribution of content types
+---
 
-Interactive Dashboard: Real-time visualization of analysis results
+## 🏗️ Technical Architecture
 
-Technical Architecture
-Technology Stack
-Backend & AI
-Python 3.8+: Primary programming language
+### **Technology Stack**
 
-Sentence Transformers: For semantic similarity analysis using 'all-MiniLM-L6-v2'
+**Backend & AI**
 
-Transformers: Optional promotional content classification
+* Python 3.8+
+* Sentence Transformers
+* Transformers
+* PyTorch
 
-PyTorch: Deep learning framework for AI models
+**Frontend**
 
-Web Framework
-Streamlit: Interactive web application framework
+* Streamlit for UI
+* Plotly for visualizations
 
-Plotly: Interactive visualizations and charts
+**Other Tools**
 
-Pandas & NumPy: Data manipulation and analysis
+* Pandas, NumPy
+* yt-dlp for YouTube data
 
-External Services
-yt-dlp: YouTube transcript extraction
+---
 
-Optional: OpenAI Whisper (currently disabled due to compatibility issues)
+## 🔧 System Components
 
-System Components
-1. Input Processing Module
-text
-YouTube URL → yt-dlp → Transcript Extraction
-Manual Input → Direct Processing
-Sample Data → Pre-loaded Examples
-2. Content Analysis Engine
-text
-Transcript → Segmentation → Semantic Analysis → Classification
-              ↓
-        Relevance Scoring → Justification Generation
-3. Visualization Layer
-text
-Analysis Results → Heatmaps → Charts → Export Reports
-Algorithm Details
-Semantic Similarity Calculation
-Text Embedding: Convert title, description, and transcript segments to vector representations
+1. **Input Processing Module**
 
-Cosine Similarity: Measure angular distance between vectors
+   * YouTube URL → Transcript extraction
+   * Manual input for custom data
+   * Pre-loaded sample content
 
-Score Normalization: Convert similarity scores to 0-100 scale
+2. **Content Analysis Engine**
 
-Promotional Content Detection
-Keyword Matching: Extensive list of marketing and sales terms
+   * Transcript segmentation (200-word blocks)
+   * Semantic similarity calculation
+   * Promotional content detection
+   * Classification and scoring
 
-Frequency Analysis: Count promotional keyword occurrences
+3. **Visualization Layer**
 
-Score Calculation: Normalize based on keyword density
+   * Heatmaps
+   * Bar charts
+   * Downloadable reports
 
-Segment Classification Logic
-text
-IF promotional_score > 0.3 → "promotional"
-ELSE IF similarity_score > 0.6 → "relevant"
-ELSE IF similarity_score > 0.3 → "moderately_relevant"
-ELSE → "irrelevant"
-Installation & Setup
-Prerequisites
-Python 3.8 or higher
+---
 
-pip package manager
+## 🧠 Algorithm Details
 
-4GB+ RAM recommended for AI models
+### **Semantic Similarity**
 
-Step-by-Step Installation
-Create Virtual Environment
+* Embeddings generated for title, description, and transcript segments
+* Cosine similarity used for comparison
+* Normalized scores converted to 0-100 range
 
-bash
+### **Promotional Content Detection**
+
+* Keyword-based marketing vocabulary
+* Density-based scoring
+
+### **Segment Classification Logic**
+
+```
+IF promotional_score > 0.3 → promotional
+ELSE IF similarity_score > 0.6 → relevant
+ELSE IF similarity_score > 0.3 → moderately relevant
+ELSE → irrelevant
+```
+
+---
+
+## 📦 Installation & Setup
+
+### **Prerequisites**
+
+* Python 3.8+
+* pip
+* 4GB+ RAM recommended
+
+### **1. Create Virtual Environment**
+
+```
 python -m venv video_relevance_env
-source video_relevance_env/bin/activate  # Linux/Mac
-video_relevance_env\Scripts\activate    # Windows
-Install Dependencies
+source video_relevance_env/bin/activate   # Linux/Mac
+video_relevance_env\\Scripts\\activate     # Windows
+```
 
-bash
+### **2. Install Dependencies**
+
+```
 pip install streamlit pandas numpy plotly scikit-learn
 pip install sentence-transformers transformers torch
 pip install yt-dlp
-Run Application
+```
 
-bash
+### **3. Run Application**
+
+```
 streamlit run app.py
-Dependency Details
-Core Dependencies
-streamlit==1.28.0: Web application framework
+```
 
-sentence-transformers==2.2.2: Semantic similarity models
+---
 
-transformers==4.33.0: NLP model framework
+## 🔍 Usage Guide
 
-torch==2.0.1: Machine learning library
+### **Input Methods**
 
-Data Processing
-pandas==2.0.3: Data manipulation
+#### 1. YouTube URL
 
-numpy==1.24.3: Numerical computing
+* Paste video URL
+* Auto transcript extraction
 
-scikit-learn==1.3.0: Machine learning utilities
+#### 2. Manual Input
 
-Visualization
-plotly==5.15.0: Interactive charts and heatmaps
+* Enter title, description, and paste transcript
 
-External Services
-yt-dlp==2023.10.13: YouTube content extraction
+#### 3. Sample Data
 
-Usage Guide
-Input Methods
-1. YouTube URL Analysis
-Paste any YouTube video URL
+* Built-in demo datasets
 
-Automatic transcript extraction
+### **Analysis Workflow**
 
-Real-time processing status
+1. Input validation
+2. Transcript segmentation
+3. Semantic and promotional analysis
+4. Classification
+5. Scoring and visualization
+6. Optional report export
 
-2. Manual Input
-Enter video title and description
+### **Score Interpretation**
 
-Paste full transcript text
+| Score   | Meaning                   |
+| ------- | ------------------------- |
+| 90-100% | Excellent alignment       |
+| 70-89%  | Strong relevance          |
+| 50-69%  | Moderate alignment        |
+| 30-49%  | Weak relevance            |
+| 0-29%   | Poor / misleading content |
 
-Immediate analysis
+---
 
-3. Sample Data
-Pre-loaded demonstration content
+## 🎯 Application Scenarios
 
-Instant results for testing
+### **Education**
 
-Educational purposes
+* Verify learning content accuracy
+* Maintain curriculum consistency
 
-Analysis Process
-Input Validation: Verify required fields (title and transcript)
+### **Marketing**
 
-Text Segmentation: Split transcript into 200-word segments
+* Validate ad content delivery
+* Ensure brand safety
 
-Semantic Analysis: Compare each segment with reference text
+### **Platform Use Cases**
 
-Classification: Categorize segments based on relevance
+* Improve recommendation systems
+* Automate content moderation
 
-Scoring: Calculate overall and segment-level scores
+---
 
-Visualization: Generate charts and heatmaps
+## ⚠️ Limitations & Future Enhancements
 
-Reporting: Create downloadable analysis report
+### **Current Limitations**
 
-Output Interpretation
-Relevance Scores
-90-100%: Excellent content alignment
+* Whisper-based audio processing disabled
+* Primarily supports English
+* Limited deep contextual understanding
 
-70-89%: Strong relevance with minor deviations
+### **Planned Upgrades**
 
-50-69%: Moderate alignment with some off-topic content
+* Multi-language support
+* Advanced models (GPT-4+, Claude, Gemini)
+* Real-time processing
+* REST API integration
+* Batch video processing
 
-30-49%: Weak relevance, significant mismatches
+---
 
-0-29%: Poor alignment, potentially misleading
+## 🖥️ Performance Considerations
 
-Segment Types
-Relevant: Directly related to declared topic
+* Model load time: ~10-30 seconds
+* YouTube extraction: 5-15 seconds
+* Analysis: 2-5 seconds per 1000 words
+* RAM: 2GB minimum, 4GB+ recommended
 
-Moderately Relevant: Some connection to topic
+---
 
-Irrelevant: No meaningful connection
+## 🔐 Ethical Considerations
 
-Promotional: Marketing or sales content
+* All processing happens **locally**
+* No data uploaded to external servers
+* Only public content is analyzed
+* Transparent scoring methodology
 
-Application Scenarios
-Educational Use Cases
-Course Content Verification: Ensure educational videos match learning objectives
+---
 
-E-learning Quality Control: Maintain content standards in online courses
+## 💼 Business Value
 
-Curriculum Alignment: Verify video relevance to specific topics
+### For Educators
 
-Marketing Applications
-Ad Content Validation: Ensure promotional videos deliver promised content
+* Ensures content quality
+* Saves verification time
 
-Brand Safety: Detect misleading or off-brand content
+### For Marketers
 
-Competitor Analysis: Evaluate competitor video content strategies
+* Protects brand reputation
+* Measures content authenticity
 
-Platform Integration
-Content Recommendation: Improve video recommendation algorithms
+### For Platforms
 
-Content Moderation: Identify misleading or spam content
+* Enhances content ranking systems
+* Improves user trust
 
-Quality Scoring: Automated content quality assessment
+---
 
-Technical Limitations & Future Enhancements
-Current Limitations
-Audio Transcription: Whisper integration disabled due to compatibility issues
+## ✅ Conclusion
 
-Language Support: Primarily English language focused
+The **Video Content Relevance Scorer** brings robust, AI-driven content analysis to the rapidly growing video ecosystem. By combining semantic understanding, segment-level insights, and intuitive visualization, it supports educators, marketers, and platforms in ensuring content accuracy, reducing misinformation, and improving overall user experience.
 
-Real-time Processing: Limited by model loading times
-
-Context Understanding: Basic semantic analysis without deep context comprehension
-
-Planned Enhancements
-Multi-language Support: Expand to other languages
-
-Advanced AI Models: Integration with GPT-4, Claude, or Gemini
-
-Real-time Processing: Optimized for faster analysis
-
-API Integration: RESTful API for platform integration
-
-Batch Processing: Analyze multiple videos simultaneously
-
-Custom Models: Train domain-specific relevance models
-
-Performance Considerations
-Processing Times
-Model Loading: 10-30 seconds initial load
-
-YouTube Extraction: 5-15 seconds depending on video length
-
-Analysis Time: 2-5 seconds per 1000 words of transcript
-
-Visualization: Near-instant after analysis completion
-
-Resource Requirements
-RAM: Minimum 2GB, Recommended 4GB+
-
-Storage: 1-2GB for models and dependencies
-
-CPU: Multi-core processor recommended
-
-Network: Internet required for YouTube processing
-
-Ethical Considerations
-Content Privacy
-All processing happens locally (no data sent to external servers)
-
-User data is not stored permanently
-
-Transcripts are processed in memory only
-
-Fair Use Compliance
-Respects copyright and fair use guidelines
-
-Only processes publicly available content
-
-Provides educational and analytical value
-
-Bias Mitigation
-Uses general-purpose language models
-
-Regular updates to address potential biases
-
-Transparent scoring methodology
-
-Business Value Proposition
-For Educators
-Quality Assurance: Ensure educational content matches objectives
-
-Time Savings: Automated content verification
-
-Improved Learning: Better aligned educational materials
-
-For Marketers
-Campaign Effectiveness: Verify ad content delivery
-
-Brand Protection: Detect misleading content early
-
-Competitive Insights: Analyze industry content trends
-
-For Platforms
-Content Quality: Improved user experience
-
-Recommendation Accuracy: Better content matching
-
-Moderation Efficiency: Automated quality checks
-
-Conclusion
-The Video Content Relevance Scorer represents a significant advancement in automated content analysis technology. By leveraging state-of-the-art AI models and providing comprehensive analytical capabilities, it addresses a critical need in the digital content ecosystem. The application's modular architecture, user-friendly interface, and robust analysis capabilities make it suitable for various professional and educational applications.
-
-As digital content continues to grow exponentially, tools like this become increasingly essential for maintaining content quality, ensuring truth in advertising, and improving user experiences across platforms.
+As online video content continues to scale, tools like this play a critical role in maintaining quality and trust across digital platforms.
